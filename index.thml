@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnantaWorn – Infinity Bracelet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f5f8ff;
+      color: #233142;
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      margin: 40px auto;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #233142;
+    }
+    .qr-code {
+      max-width: 250px;
+      width: 100%;
+      margin: 15px auto;
+      border: 2px solid #1a2a43;
+      padding: 8px;
+      background-color: white;
+    }
+    
+    /* Payment Options Styling */
+    .payment-options h3 {
+      color: #1a2a43;
+      margin-bottom: 10px;
+    }
+    .payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      background-color: #f0f5ff;
+      border: 1px solid #d0e0ff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .payment-option:hover {
+      background-color: #e0ebff;
+      transform: translateY(-2px);
+    }
+    .payment-icon {
+      font-size: 18px;
+      margin-right: 15px;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      background-color: #1a2a43;
+      color: white;
+      border-radius: 50%;
+    }
+    .payment-details {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #f5f9ff;
+      border-radius: 8px;
+      text-align: left;
+      border-left: 3px solid #1a2a43;
+    }
+    .payment-details h4 {
+      margin-top: 0;
+      color: #0a1128;
+    }
+    .payment-id {
+      font-size: 1.1rem;
+      padding: 8px;
+      background-color: #fff;
+      border: 1px dashed #385170;
+      border-radius: 4px;
+      margin: 15px 0;
+    }
+    .bank-info {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 15px 0;
+    }
+    .bank-info p {
+      margin: 8px 0;
+    }
+    .note {
+      font-size: 0.9rem;
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #d0e0ff;
+      color: #385170;
+    }
+    
+    /* Responsive adjustments */
+    @media (min-width: 600px) {
+      .payment-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .payment-option {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+    header {
+      background-color: #1a2a43;
+      text-align: center;
+      padding: 40px 20px;
+      color: #ffffff;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #e3f0ff;
+    }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .hero img {
+      max-width: 300px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      border: 4px solid #385170;
+    }
+    .hero h2 {
+      font-size: 1.8rem;
+      margin: 0 0 10px;
+      color: #0a1128;
+    }
+    .hero p {
+      max-width: 600px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    .buy-button {
+      background-color: #233857;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .buy-button:hover {
+      background-color: #385170;
+    }
+    .section {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #0a1128;
+    }
+    .section ul li {
+      margin-bottom: 8px;
+      color: #233142;
+    }
+    footer {
+      background-color: #1a2a43;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #e3f0ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AnantaWorn</h1>
+    <p>Energy You Can Wear</p>
+  </header>
+  <section class="hero">
+    <img src="https://via.placeholder.com/300x300.png?text=Infinity+Bracelet" alt="Infinity Bracelet" />
+    <h2>Infinity Bracelet – "I See Infinite Possibilities"</h2>
+    <p>This handcrafted bracelet is energetically charged with intention to awaken the infinite within you. Comes with a handwritten affirmation card and ritual guide.</p>
+    <button class="buy-button" onclick="document.getElementById('payment-modal').style.display='flex'">Buy Now – ₹1,111</button>
+    
+    <!-- Payment Options Modal -->
+    <div id="payment-modal" class="modal">
+      <div class="modal-content payment-options">
+        <span class="close-button" onclick="document.getElementById('payment-modal').style.display='none'">&times;</span>
+        <h3>Choose Payment Method</h3>
+        <p>Select your preferred way to pay ₹1,111</p>
+        
+        <div class="payment-buttons">
+          <button class="payment-option" onclick="showPaymentDetails('upi')">
+            <span class="payment-icon">₹</span>
+            <span>UPI Payment</span>
+          </button>
+          
+          <button class="payment-option" onclick="showPaymentDetails('qr')">
+            <span class="payment-icon">📱</span>
+            <span>Scan QR Code</span>
+          </button>
+          
+          <button class="payment-option" onclick="showPaymentDetails('bank')">
+            <span class="payment-icon">🏦</span>
+            <span>Bank Transfer</span>
+          </button>
+          
+          <button class="payment-option paypal-option" onclick="showPaymentDetails('paypal')">
+            <span class="payment-icon">P</span>
+            <span>PayPal</span>
+          </button>
+        </div>
+        
+        <!-- UPI Details Section -->
+        <div id="upi-details" class="payment-details">
+          <h4>UPI Payment</h4>
+          <p class="payment-id">UPI ID: <strong>9868072491@apl</strong></p>
+          <p>Enter this UPI ID in any payment app (Google Pay, PhonePe, Paytm, etc.)</p>
+          <p>After payment, please message us on <a href="https://wa.me/919868072491" target="_blank">WhatsApp</a> with your order details and shipping address.</p>
+        </div>
+        
+        <!-- QR Code Section -->
+        <div id="qr-details" class="payment-details">
+          <h4>Scan QR Code</h4>
+          <img src="https://via.placeholder.com/250x250.png?text=Your+Payment+QR" alt="Payment QR Code" class="qr-code">
+          <p>Scan this QR code with any UPI app to pay</p>
+          <p class="note">After payment, please message us on <a href="https://wa.me/919868072491" target="_blank">WhatsApp</a> with your order details and shipping address.</p>
+        </div>
+        
+        <!-- Bank Transfer Section -->
+        <div id="bank-details" class="payment-details">
+          <h4>Bank Transfer Details</h4>
+          <div class="bank-info">
+            <p><strong>Account Name:</strong> Kapil Chawla</p>
+            <p><strong>Account Number:</strong> 55550124374487</p>
+            <p><strong>IFSC Code:</strong> FDRL0005555</p>
+            <p><strong>Bank Name:</strong> FEDERAL BANK</p>
+          </div>
+          <p class="note">After payment, please message us on <a href="https://wa.me/919868072491" target="_blank">WhatsApp</a> with your payment reference number and shipping address.</p>
+        </div>
+        
+        <!-- PayPal Section -->
+        <div id="paypal-details" class="payment-details">
+          <h4>PayPal Payment</h4>
+          <p>Click the button below to pay securely with PayPal or Credit/Debit Card</p>
+          <a href="https://paypal.me/Kapilchawla555?country.x=IN&locale.x=en_GB" target="_blank" class="paypal-button">
+            Pay with PayPal - ₹1,111
+          </a>
+          <p class="note">After payment, please message us on <a href="https://wa.me/919868072491" target="_blank">WhatsApp</a> with your order details and shipping address.</p>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function showPaymentDetails(paymentType) {
+        // Hide all payment details first
+        document.getElementById('upi-details').style.display = 'none';
+        document.getElementById('qr-details').style.display = 'none';
+        document.getElementById('bank-details').style.display = 'none';
+        document.getElementById('paypal-details').style.display = 'none';
+        
+        // Show the selected payment details
+        document.getElementById(paymentType + '-details').style.display = 'block';
+      }
+      
+      // Set default payment option to UPI when modal opens
+      document.querySelector('.buy-button').addEventListener('click', function() {
+        setTimeout(function() {
+          showPaymentDetails('upi');
+        }, 100);
+      });
+    </script>
+  </section>
+  <section class="section">
+    <h3>What's Included</h3>
+    <ul>
+      <li>1x Charged Infinity Bracelet</li>
+      <li>1x Handwritten Affirmation Card</li>
+      <li>Ritual Instructions</li>
+      <li>Free Shipping in India</li>
+    </ul>
+  </section>
+  <section class="section">
+    <h3>About AnantaWorn</h3>
+    <p>AnantaWorn blends sacred Eastern ritual with contemporary soul. Founded by Kapil, a Family Constellation Facilitator, each piece is handmade and infused with timeless energy. Ananta means endless, and so is your potential.</p>
+  </section>
+  <footer>
+    <p>&copy; 2025 AnantaWorn. Handmade in India with love & intention.</p>
+  </footer>
+</body>
+</html>
